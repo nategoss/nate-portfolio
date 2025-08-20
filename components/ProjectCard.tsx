@@ -27,7 +27,7 @@ const generateSlug = (title: string): string => {
 export function ProjectCard({ title, category, description, image, index, slug }: ProjectCardProps) {
   const projectSlug = slug || generateSlug(title)
   const [isHovered, setIsHovered] = useState(false)
-  const [likes, setLikes] = useState(Math.floor(Math.random() * 50) + 10)
+  const [likes, setLikes] = useState(0)
   
   const x = useMotionValue(0)
   const y = useMotionValue(0)

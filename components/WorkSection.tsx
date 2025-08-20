@@ -2,11 +2,28 @@
 
 import { motion } from 'framer-motion'
 import { ProjectCard } from './ProjectCard'
-import { getFeaturedProjects } from '../data/projects'
+import { getFeaturedProjects, Project } from '../data/projects'
 import { Sparkles, Zap } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
 export function WorkSection() {
-  const featuredProjects = getFeaturedProjects()
+  const [featuredProjects, setFeaturedProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const projects = await getFeaturedProjects()
+        setFeaturedProjects(projects)
+      } catch (error) {
+        console.error('Failed to load featured projects:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    loadProjects()
+  }, [])
 
   return (
     <section id="work" className="py-24 atomic-gradient-bg relative overflow-hidden theme-transition">
@@ -74,7 +91,7 @@ export function WorkSection() {
                 </motion.span>
               </motion.h2>
               
-              <motion.p 
+              <motion.div 
                 className="text-xl md:text-2xl text-content-secondary leading-relaxed theme-transition"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -90,7 +107,7 @@ export function WorkSection() {
                     transition={{ duration: 0.4, delay: 0.8 }}
                   />
                 </motion.span>
-              </motion.p>
+              </motion.div>
             </div>
 
             {/* Creative subtitle */}
@@ -116,28 +133,47 @@ export function WorkSection() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {featuredProjects.map((project, index) => (
-            <motion.div
-              key={project.slug}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                duration: 0.6, 
-                delay: index * 0.1,
-                ease: [0.25, 0.46, 0.45, 0.94]
-              }}
-            >
-              <ProjectCard
-                title={project.title}
-                category={project.category}
-                description={project.description}
-                image={project.thumbnailImage}
-                slug={project.slug}
-                index={index}
-              />
-            </motion.div>
-          ))}
+          {loading ? (
+            // Loading skeleton
+            [...Array(3)].map((_, index) => (
+              <motion.div
+                key={`skeleton-${index}`}
+                className="bg-surface rounded-3xl p-6 atomic-shadow theme-transition"
+                initial={{ opacity: 0, y: 60 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div className="aspect-video bg-neutral rounded-2xl mb-4 animate-pulse" />
+                <div className="h-4 bg-neutral rounded mb-2 animate-pulse" />
+                <div className="h-3 bg-neutral rounded w-2/3 mb-4 animate-pulse" />
+                <div className="h-3 bg-neutral rounded w-full mb-2 animate-pulse" />
+                <div className="h-3 bg-neutral rounded w-3/4 animate-pulse" />
+              </motion.div>
+            ))
+          ) : (
+            featuredProjects.map((project, index) => (
+              <motion.div
+                key={project.slug}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+              >
+                <ProjectCard
+                  title={project.title}
+                  category={project.category}
+                  description={project.description}
+                  image={project.thumbnailImage}
+                  slug={project.slug}
+                  index={index}
+                />
+              </motion.div>
+            ))
+          )}
         </motion.div>
 
         {/* Enhanced CTA section */}
@@ -150,7 +186,7 @@ export function WorkSection() {
         >
           {/* Creative background for CTA */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-orange-50 to-green-50 dark:from-orange-900/20 dark:to-green-900/20 rounded-3xl theme-transition"
+            className="absolute inset-0 bg-gradient-to-r from-orange-100/60 to-green-100/60 dark:from-orange-900/20 dark:to-green-900/20 rounded-3xl theme-transition"
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 0.5 }}
             transition={{ duration: 0.8 }}
@@ -176,22 +212,14 @@ export function WorkSection() {
 
             {/* FIXED: Enhanced button with proper contrast in all states */}
             <motion.button
-              className="group relative inline-flex items-center space-x-3 border-2 border-primary bg-surface rounded-full font-semibold transition-all duration-300 overflow-hidden atomic-shadow hover:atomic-shadow-lg theme-transition px-10 py-5"
+              className="group relative inline-flex items-center space-x-3 border-2 border-primary bg-surface hover:bg-primary rounded-full font-semibold transition-all duration-300 overflow-hidden atomic-shadow hover:atomic-shadow-lg theme-transition px-10 py-5"
               whileHover={{ 
                 scale: 1.05, 
                 y: -3
               }}
               whileTap={{ scale: 0.95 }}
-            >
-              {/* Animated background fill */}
-              <motion.div
-                className="absolute inset-0 bg-primary"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "0%" }}
-                transition={{ duration: 0.4 }}
-              />
-              
-              {/* FIXED: Text with proper contrast states */}
+            >              
+              {/* FIXED: Text with proper contrast - stays primary color in light mode, white in dark mode on hover */}
               <span className="relative z-10 text-primary group-hover:text-white transition-colors duration-300">
                 View All Projects
               </span>

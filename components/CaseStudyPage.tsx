@@ -438,13 +438,9 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
                   className="text-center bg-surface rounded-3xl p-8 atomic-shadow hover:atomic-shadow-lg transition-all duration-300 relative overflow-hidden theme-transition"
                 >
                   <div className="absolute inset-0 atomic-pattern-dots opacity-5" />
-                  <motion.div 
-                    className="text-5xl md:text-6xl font-black text-primary mb-4 relative z-10"
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-                  >
+                  <div className="text-5xl md:text-6xl font-black text-primary mb-4 relative z-10">
                     {result.value}
-                  </motion.div>
+                  </div>
                   <h3 className="font-bold text-content-primary mb-3 text-lg tracking-wide relative z-10 theme-transition">{result.metric}</h3>
                   <p className="text-content-secondary text-sm font-medium relative z-10 theme-transition">{result.description}</p>
                 </motion.div>

@@ -112,20 +112,13 @@ export function AboutSection() {
               
               <div className="space-y-5 text-lg text-content-secondary leading-relaxed theme-transition">
                 <p>
-                  I'm a <strong className="text-content-primary theme-transition">UX DESIGNER AND STRATEGIST</strong> currently at <strong className="text-content-primary theme-transition">HP</strong>, with experience 
-                  at leading technology and creative companies including <strong className="text-content-primary theme-transition">AUTODESK</strong>, 
-                  <strong className="text-content-primary theme-transition"> INTEL</strong>, and <strong className="text-content-primary theme-transition">AKQA</strong>.
+                  I am a <strong className="text-content-primary theme-transition text-base font-semibold">UX design leader</strong> with <strong className="text-content-primary theme-transition text-base font-semibold">two decades</strong> of experience crafting intuitive and impactful user experiences. I have a proven ability to spearhead <strong className="text-content-primary theme-transition text-base font-semibold">UX strategy and design</strong> for complex projects, as demonstrated by my work at HP, where I led the consolidation of software support into a unified app, resulting in a <strong className="text-content-primary theme-transition text-base font-semibold">3% reduction in support calls</strong>.
                 </p>
                 <p>
-                  My career spans both <strong className="text-content-primary theme-transition">TECHNOLOGY AND MARKETING/ADVERTISING COMPANIES</strong>, 
-                  giving me a unique perspective on how to balance user needs with business objectives. 
-                  I specialize in desktop and mobile software experiences, as well as brand websites 
-                  and application interfaces.
+                  I am passionate about <strong className="text-content-primary theme-transition text-base font-semibold">mentoring and growing design talent</strong>, having successfully trained and mentored junior designers in user-centered design principles and Figma best practices.
                 </p>
                 <p>
-                  I approach every project through the lens of <strong className="text-content-primary theme-transition">STRATEGIC UX THINKING</strong> — 
-                  understanding how users, technology, and business goals interconnect to create 
-                  experiences that are both meaningful and scalable.
+                  My experience at Autodesk and Intel further honed my skills in <strong className="text-content-primary theme-transition text-base font-semibold">leading design teams</strong>, shaping project strategy, and conducting <strong className="text-content-primary theme-transition text-base font-semibold">user research</strong> to deliver innovative solutions. I am adept at collaborating with product managers, engineers, and data scientists to create user experiences that are not only beautiful but also drive business goals.
                 </p>
               </div>
 
