@@ -4,7 +4,7 @@ import path from 'path'
 
 export default defineConfig(({ command, mode }) => {
   // For GitHub Pages: https://nategoss.github.io/nate-portfolio/
-  const base = mode === 'production' ? '/nate-portfolio/' : '/'
+  const base = mode === 'production' ? '/nate-portfolio' : '/'
   
   return {
     plugins: [react()],
