@@ -20,6 +20,7 @@ export function Navigation() {
   const location = useLocation()
   const navigate = useNavigate()
   const isHomePage = location.pathname === '/'
+  const isWorkPage = location.pathname === '/projects' || location.pathname.startsWith('/case-study/')
 
   // Enhanced scroll detection
   const handleScroll = useCallback(() => {
@@ -65,7 +66,15 @@ export function Navigation() {
   }, [isHomePage, activeSection])
 
   useEffect(() => {
-    if (!isHomePage) return
+    if (!isHomePage) {
+      // Set active section based on current page
+      if (isWorkPage) {
+        setActiveSection('work')
+      } else {
+        setActiveSection('home')
+      }
+      return
+    }
 
     // Call handleScroll immediately to set initial state
     handleScroll()
@@ -76,7 +85,7 @@ export function Navigation() {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [isHomePage, handleScroll])
+  }, [isHomePage, isWorkPage, handleScroll])
 
   const handleNavClick = (item: typeof navItems[0]) => {
     setActiveSection(item.id)
@@ -107,7 +116,17 @@ export function Navigation() {
 
   return (
     <>
+      {/* Skip to content link for screen readers */}
+      <a
+        href="#main-content"
+        className="skip-link"
+      >
+        Skip to main content
+      </a>
+      
       <motion.nav
+        role="banner"
+        aria-label="Main navigation"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -120,11 +139,12 @@ export function Navigation() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Atomic Logo */}
-            <motion.div
+            <motion.button
               className="relative group cursor-pointer"
               onClick={handleLogoClick}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-label="Navigate to home page"
             >
               <motion.div
                 className="absolute -inset-3 atomic-starburst bg-atomic-yellow/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -135,8 +155,9 @@ export function Navigation() {
                   className="w-10 h-10 atomic-gradient-1 rounded-full flex items-center justify-center"
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  aria-hidden="true"
                 >
-                  <Atom className="w-6 h-6 text-white" />
+                  <Atom className="w-6 h-6 text-white" aria-hidden="true" />
                 </motion.div>
                 <div>
                   <span className="text-xl font-bold text-primary">NATE</span>
@@ -155,13 +176,17 @@ export function Navigation() {
                   </motion.span>
                 </div>
               </motion.div>
-            </motion.div>
+            </motion.button>
             
             {/* Desktop Navigation with Theme Toggle */}
             <div className="hidden md:flex items-center space-x-4">
               <div className="flex items-center space-x-2 bg-surface/80 backdrop-blur-sm rounded-full p-3 atomic-shadow theme-transition">
                 {navItems.map((item, index) => {
-                  const isActive = isHomePage ? activeSection === item.id : item.id === 'home'
+                  const isActive = isHomePage 
+                    ? activeSection === item.id 
+                    : isWorkPage 
+                      ? item.id === 'work' 
+                      : item.id === 'home'
                   
                   return (
                     <motion.button
@@ -217,6 +242,9 @@ export function Navigation() {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label={isMobileMenuOpen ? 'Close mobile menu' : 'Open mobile menu'}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
               >
                 <AnimatePresence mode="wait">
                   {isMobileMenuOpen ? (
@@ -268,6 +296,9 @@ export function Navigation() {
             
             {/* Menu panel */}
             <motion.div
+              id="mobile-menu"
+              role="navigation"
+              aria-label="Mobile navigation menu"
               initial={{ x: "100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: "100%", opacity: 0 }}
@@ -296,7 +327,11 @@ export function Navigation() {
                 {/* Menu items */}
                 <div className="space-y-3">
                   {navItems.map((item, index) => {
-                    const isActive = isHomePage ? activeSection === item.id : item.id === 'home'
+                    const isActive = isHomePage 
+                      ? activeSection === item.id 
+                      : isWorkPage 
+                        ? item.id === 'work' 
+                        : item.id === 'home'
                     
                     return (
                       <motion.button

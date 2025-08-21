@@ -2,19 +2,26 @@
 
 import { motion } from 'framer-motion'
 import { ProjectCard } from './ProjectCard'
-import { getFeaturedProjects, Project } from '../data/projects'
+import { getFeaturedProjects, getPublishedProjects, Project } from '../data/projects'
 import { Sparkles, Zap } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export function WorkSection() {
   const [featuredProjects, setFeaturedProjects] = useState<Project[]>([])
+  const [totalPublishedProjects, setTotalPublishedProjects] = useState(0)
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const loadProjects = async () => {
       try {
-        const projects = await getFeaturedProjects()
-        setFeaturedProjects(projects)
+        const [featured, allPublished] = await Promise.all([
+          getFeaturedProjects(),
+          getPublishedProjects()
+        ])
+        setFeaturedProjects(featured)
+        setTotalPublishedProjects(allPublished.length)
       } catch (error) {
         console.error('Failed to load featured projects:', error)
       } finally {
@@ -128,7 +135,8 @@ export function WorkSection() {
 
         {/* Enhanced grid with masonry-like layout */}
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 grid-cards-equal"
+          style={{ gridAutoRows: 'minmax(0, 1fr)' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -154,6 +162,7 @@ export function WorkSection() {
             featuredProjects.map((project, index) => (
               <motion.div
                 key={project.slug}
+                className="h-full flex flex-col"
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -176,14 +185,15 @@ export function WorkSection() {
           )}
         </motion.div>
 
-        {/* Enhanced CTA section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-          className="text-center mt-20 relative"
-        >
+        {/* Enhanced CTA section - only show if more than 3 published projects */}
+        {totalPublishedProjects > 3 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
+            className="text-center mt-20 relative"
+          >
           {/* Creative background for CTA */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-orange-100/60 to-green-100/60 dark:from-orange-900/20 dark:to-green-900/20 rounded-3xl theme-transition"
@@ -210,8 +220,9 @@ export function WorkSection() {
               </p>
             </motion.div>
 
-            {/* FIXED: Enhanced button with proper contrast in all states */}
+            {/* Enhanced button with navigation to projects page */}
             <motion.button
+              onClick={() => navigate('/projects')}
               className="group relative inline-flex items-center space-x-3 border-2 border-primary bg-surface hover:bg-primary rounded-full font-semibold transition-all duration-300 overflow-hidden atomic-shadow hover:atomic-shadow-lg theme-transition px-10 py-5"
               whileHover={{ 
                 scale: 1.05, 
@@ -219,7 +230,7 @@ export function WorkSection() {
               }}
               whileTap={{ scale: 0.95 }}
             >              
-              {/* FIXED: Text with proper contrast - stays primary color in light mode, white in dark mode on hover */}
+              {/* Text with proper contrast - stays primary color in light mode, white in dark mode on hover */}
               <span className="relative z-10 text-primary group-hover:text-white transition-colors duration-300">
                 View All Projects
               </span>
@@ -252,6 +263,7 @@ export function WorkSection() {
             </motion.button>
           </div>
         </motion.div>
+        )}
       </div>
     </section>
   )

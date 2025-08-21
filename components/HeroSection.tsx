@@ -42,8 +42,8 @@ export function HeroSection() {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-atomic theme-transition">
-      {/* Atomic Age Background Pattern */}
-      <div className="absolute inset-0 atomic-pattern-starburst opacity-10" />
+      {/* Atomic Age Background Pattern - Consistent between light/dark modes */}
+      <div className="absolute inset-0 atomic-pattern-starburst opacity-8 dark:opacity-8" />
       
       {/* Atomic Orbital Animations */}
       <motion.div

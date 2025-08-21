@@ -6,6 +6,7 @@ import { WorkSection } from './WorkSection'
 import { AboutSection } from './AboutSection'
 import { ContactSection } from './ContactSection'
 import { CaseStudyPage } from './CaseStudyPage'
+import { ProjectsPage } from './ProjectsPage'
 import { getProjectBySlug, Project } from '../data/projects'
 
 // Home page component that includes all sections
@@ -45,10 +46,7 @@ function CaseStudyWrapper() {
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
 
-  // Scroll to top when loading case study
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [slug])
+  // Note: Scroll to top is now handled by the global ScrollToTop component
 
   // Load project data asynchronously
   useEffect(() => {
@@ -134,6 +132,14 @@ export function AppRouter() {
         element={
           <Layout>
             <HomePage />
+          </Layout>
+        } 
+      />
+      <Route 
+        path="/projects" 
+        element={
+          <Layout>
+            <ProjectsPage />
           </Layout>
         } 
       />

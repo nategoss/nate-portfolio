@@ -13,7 +13,10 @@ export function ThemeToggle() {
       className="relative w-16 h-16 bg-surface border-2 border-atomic rounded-full atomic-shadow hover:atomic-shadow-lg transition-all duration-300 flex items-center justify-center theme-transition"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
       title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      role="switch"
+      aria-checked={theme === 'dark'}
     >
       {/* Background atomic animation */}
       <motion.div

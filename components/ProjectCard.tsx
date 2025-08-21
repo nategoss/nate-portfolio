@@ -45,7 +45,7 @@ export function ProjectCard({ title, category, description, image, index, slug }
         delay: index * 0.15, 
         ease: [0.25, 0.46, 0.45, 0.94]
       }}
-      className={`group ${isLarge ? 'md:col-span-2' : ''}`}
+      className={`group h-full flex flex-col ${isLarge ? 'md:col-span-2' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onMouseMove={(e) => {
@@ -56,9 +56,9 @@ export function ProjectCard({ title, category, description, image, index, slug }
         y.set(e.clientY - centerY)
       }}
     >
-      <Link to={`/case-study/${projectSlug}`} className="block">
+      <Link to={`/case-study/${projectSlug}`} className="block h-full">
         <motion.div
-          className="relative overflow-hidden bg-surface atomic-shadow hover:atomic-shadow-lg cursor-pointer rounded-2xl min-h-[320px] theme-transition"
+          className="relative overflow-hidden bg-surface atomic-shadow hover:atomic-shadow-lg cursor-pointer rounded-2xl h-full flex flex-col theme-transition"
           whileHover={{ 
             y: -16,
             transition: { duration: 0.4, ease: 'easeOut' }
@@ -135,12 +135,12 @@ export function ProjectCard({ title, category, description, image, index, slug }
 
           {/* Content section with consistent layout */}
           <motion.div 
-            className="p-6 relative z-20"
+            className="p-6 relative z-20 flex-1 flex flex-col"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 + index * 0.1 }}
           >
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col">
               {/* FIXED: Removed problematic hover color change that caused contrast issues */}
               <motion.h3 
                 className="text-xl font-bold text-content-primary mb-3 transition-colors duration-300 theme-transition"
@@ -150,13 +150,13 @@ export function ProjectCard({ title, category, description, image, index, slug }
               </motion.h3>
               
               <motion.p 
-                className="text-content-secondary leading-relaxed mb-4 theme-transition"
+                className="text-content-secondary leading-relaxed mb-4 flex-1 theme-transition"
               >
                 {description}
               </motion.p>
 
               {/* Creative interaction elements */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-auto">
                 <motion.div 
                   className="flex items-center space-x-4 text-sm text-content-tertiary theme-transition"
                   initial={{ opacity: 0 }}

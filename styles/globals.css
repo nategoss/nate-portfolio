@@ -64,6 +64,19 @@
     scroll-behavior: smooth;
   }
   
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
   body {
     font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-weight: 400;
@@ -114,6 +127,39 @@
 
   button {
     font-weight: 500;
+  }
+  
+  /* Enhanced focus styles for accessibility */
+  *:focus {
+    outline: none;
+  }
+  
+  *:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  
+  /* High contrast focus for interactive elements */
+  button:focus-visible, 
+  a:focus-visible, 
+  input:focus-visible, 
+  textarea:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px rgba(255, 107, 53, 0.2);
+  }
+  
+  .dark button:focus-visible, 
+  .dark a:focus-visible, 
+  .dark input:focus-visible, 
+  .dark textarea:focus-visible,
+  .dark [role="button"]:focus-visible,
+  .dark [tabindex]:focus-visible {
+    outline: 3px solid var(--color-primary);
+    box-shadow: 0 0 0 6px rgba(255, 138, 101, 0.3);
   }
 }
 
@@ -302,6 +348,24 @@
     background-size: 40px 40px, 30px 30px, 35px 35px, 25px 25px;
   }
   
+  /* Enhanced visibility for light mode */
+  :root .atomic-pattern-starburst {
+    background-image: 
+      radial-gradient(circle at 25% 25%, #F57F17 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, #E64A19 1px, transparent 1px),
+      radial-gradient(circle at 75% 25%, #0097A7 1px, transparent 1px),
+      radial-gradient(circle at 25% 75%, #00897B 1px, transparent 1px);
+  }
+  
+  /* Keep vibrant colors for dark mode */
+  .dark .atomic-pattern-starburst {
+    background-image: 
+      radial-gradient(circle at 25% 25%, var(--color-atomic-yellow) 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, var(--color-primary) 1px, transparent 1px),
+      radial-gradient(circle at 75% 25%, var(--color-secondary) 1px, transparent 1px),
+      radial-gradient(circle at 25% 75%, var(--color-accent) 1px, transparent 1px);
+  }
+  
   /* Atomic Shapes */
   .atomic-boomerang {
     clip-path: polygon(0% 40%, 60% 0%, 100% 35%, 85% 50%, 100% 65%, 60% 100%, 0% 60%, 15% 50%);
@@ -360,5 +424,94 @@
   /* Theme transition utilities */
   .theme-transition {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Grid utilities for equal height cards */
+  .auto-rows-fr {
+    grid-auto-rows: 1fr;
+  }
+  
+  /* More explicit grid utility for equal heights */
+  .grid-equal-height {
+    display: grid;
+    grid-auto-rows: minmax(0, 1fr);
+  }
+  
+  /* Alternative approach using CSS Grid subgrid simulation */
+  .grid-cards-equal {
+    display: grid;
+    align-items: stretch;
+  }
+  
+  .grid-cards-equal > * {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  /* Accessibility utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--color-primary);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 1000;
+    transition: top 0.2s ease;
+  }
+  
+  .skip-link:focus {
+    top: 6px;
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    :root {
+      --color-primary: #D84315;
+      --color-secondary: #006064;
+      --color-text-primary: #000000;
+      --color-text-secondary: #212121;
+      --color-surface: #FFFFFF;
+      --color-border: #424242;
+    }
+    
+    .dark {
+      --color-primary: #FF8A65;
+      --color-secondary: #4DD0E1;
+      --color-text-primary: #FFFFFF;
+      --color-text-secondary: #E0E0E0;
+      --color-surface: #121212;
+      --color-border: #757575;
+    }
+  }
+  
+  /* Reduce motion for animations */
+  @media (prefers-reduced-motion: reduce) {
+    .atomic-orbit,
+    .atomic-pulse,
+    .atomic-rotate {
+      animation: none;
+    }
+    
+    .motion-safe-only {
+      transform: none !important;
+      transition: none !important;
+    }
   }
 }

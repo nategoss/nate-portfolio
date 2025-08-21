@@ -49,14 +49,8 @@ export function CaseStudyPage({ project }: CaseStudyPageProps) {
       >
         <motion.button
           onClick={() => {
-            navigate('/#work')
-            // Wait a moment for navigation, then scroll to work section
-            setTimeout(() => {
-              const workElement = document.getElementById('work')
-              if (workElement) {
-                workElement.scrollIntoView({ behavior: 'smooth' })
-              }
-            }, 100)
+            // Use browser history to go back to wherever the user came from
+            navigate(-1)
           }}
           className="inline-flex items-center space-x-3 text-content-primary hover:text-primary transition-colors bg-surface/80 backdrop-blur-sm px-6 py-3 rounded-full atomic-shadow font-bold tracking-wide theme-transition"
           whileHover={{ x: -8, scale: 1.05 }}

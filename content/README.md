@@ -1,212 +1,223 @@
-# Case Study Content Management
+# Content Management System
 
-This directory contains all case study content for the portfolio. You can easily add, edit, or remove case studies without touching any code.
+This directory contains all the content for the portfolio website, organized in a structured, maintainable way.
 
 ## Directory Structure
 
 ```
 /content/
-├── case-studies.json          # Index file controlling which studies are featured/published
-├── case-studies/              # Individual case study markdown files
-│   ├── ecommerce-platform.md
-│   ├── healthtech-app.md
-│   ├── fintech-brand.md
-│   └── [your-new-study].md
-└── README.md                  # This file
+├── README.md              # This file - content management documentation
+├── index.json            # Content index - controls which projects are featured/published
+└── case-studies/         # Individual case study markdown files
+    ├── ecommerce-platform.md
+    ├── healthtech-app.md
+    ├── fintech-brand.md
+    ├── mobile-banking.md
+    ├── saas-dashboard.md
+    └── travel-app.md
 ```
 
-## Adding a New Case Study
+## How It Works
 
-1. **Create a new markdown file** in `/content/case-studies/` with a descriptive filename (e.g., `mobile-banking-app.md`)
+### 1. Content Index (`index.json`)
 
-2. **Add frontmatter** at the top of the file with project metadata:
+This file controls which case studies are featured on the homepage and which are published (visible) on the portfolio:
 
-```markdown
+```json
+{
+  "featured": ["ecommerce-platform", "healthtech-app", "fintech-brand"],
+  "published": ["ecommerce-platform", "healthtech-app", "fintech-brand", "mobile-banking", "saas-dashboard", "travel-app"],
+  "categories": ["UX Strategy & Design", "Product Design", "Brand Strategy", "Mobile Design", "Web Development"]
+}
+```
+
+- **featured**: Projects shown in the "Featured Work" section on the homepage (max 3 recommended)
+- **published**: All projects visible in the "All Projects" gallery
+- **categories**: Available project categories for filtering
+
+### 2. Case Study Files (`/case-studies/*.md`)
+
+Each case study is a markdown file with frontmatter metadata. The filename (without .md) becomes the project slug used in URLs.
+
+#### Frontmatter Structure
+
+Every case study file starts with YAML frontmatter containing project metadata:
+
+```yaml
 ---
-slug: "mobile-banking-app"
-title: "Mobile Banking App"
-subtitle: "Reimagining digital banking for Gen Z"
-category: "Mobile Design"
-description: "Complete mobile app redesign focused on young users, resulting in 50% increase in user engagement."
+slug: "project-slug"
+title: "Project Title"
+subtitle: "Brief project description"
+category: "UX Strategy & Design"
+description: "Longer description for project cards"
 year: "2024"
-duration: "5 months"
-team: "6 people"
-role: "Lead Product Designer"
-client: "NextGen Bank"
-heroImage: "https://your-image-url.com/hero.jpg"
-thumbnailImage: "https://your-image-url.com/thumb.jpg"
-tools: ["Figma", "Principle", "Hotjar"]
-technologies: ["React Native", "Node.js"]
-liveUrl: "https://app.nextgenbank.com"
+duration: "6 months"
+team: "4 people"
+role: "Lead UX Designer"
+client: "Client Name"
+heroImage: "https://example.com/hero-image.jpg"
+thumbnailImage: "https://example.com/thumbnail.jpg"
+tools: ["Figma", "Miro", "Hotjar"]
+technologies: ["React", "TypeScript"]
+liveUrl: "https://example.com"
 prototypeUrl: "https://figma.com/proto/example"
 featured: true
 published: true
 results:
-  - metric: "User Engagement"
-    value: "+50%"
-    description: "Increase in daily active users"
-  - metric: "Task Completion"
-    value: "+35%"
-    description: "Faster transaction completion"
+  - metric: "Conversion Rate"
+    value: "+40%"
+    description: "Increase in completed purchases"
 process:
-  - "User Research & Interviews"
-  - "Competitive Analysis"
-  - "Wireframing & Prototyping"
-  - "Visual Design"
-  - "Usability Testing"
-  - "Development Handoff"
+  - "User Research & Competitive Analysis"
+  - "Information Architecture Redesign"
 ---
 ```
 
-3. **Write your case study content** below the frontmatter using standard markdown:
+#### Content Structure
+
+After the frontmatter, write the case study content in markdown:
 
 ```markdown
-## Project Overview
+## Overview
 
-Your project overview here...
+Project overview content here...
 
 ## The Challenge
 
-Describe the problems you were solving...
+Describe the problems that needed to be solved...
 
 ## The Solution
 
-Explain your approach and solutions...
+Explain your design solution...
+
+## Design Process
+
+Detail your design process...
 
 ## Results & Impact
 
-Detail the outcomes and metrics...
+Show the outcomes and business impact...
 ```
 
-4. **Update the index file** `/content/case-studies.json` to include your new case study:
+## Adding New Case Studies
 
-```json
-{
-  "featured": [
-    "ecommerce-platform",
-    "healthtech-app", 
-    "fintech-brand",
-    "mobile-banking-app"
-  ],
-  "published": [
-    "ecommerce-platform",
-    "healthtech-app",
-    "fintech-brand",
-    "mobile-banking-app"
-  ]
-}
-```
+### 1. Create the Markdown File
 
-## Editing Existing Case Studies
+1. Create a new file in `/content/case-studies/` with a descriptive slug name (e.g., `new-project.md`)
+2. Add the frontmatter with all required fields
+3. Write the case study content in markdown
 
-1. **Find the markdown file** in `/content/case-studies/` that corresponds to the case study you want to edit
-2. **Edit the frontmatter** to update project metadata (title, description, results, etc.)
-3. **Edit the markdown content** to update the case study narrative
-4. **Save the file** - changes will appear immediately on the website
+### 2. Update the Content Index
 
-## Removing a Case Study
+1. Open `/content/index.json`
+2. Add the new project slug to the `published` array
+3. Optionally add it to the `featured` array if it should appear on the homepage
+4. Add any new categories to the `categories` array if needed
 
-1. **Option 1 - Hide temporarily**: Set `published: false` in the frontmatter
-2. **Option 2 - Remove completely**: Delete the markdown file and remove the slug from `/content/case-studies.json`
+### 3. Required Images
 
-## Controlling Featured Projects
+Each project needs:
+- **heroImage**: Large banner image for the case study page (recommended: 1200x600px)
+- **thumbnailImage**: Square/rectangular image for project cards (recommended: 600x400px)
 
-Edit `/content/case-studies.json` to control which projects appear in the "Featured Work" section:
-
-- **Add to featured**: Include the slug in the `featured` array
-- **Remove from featured**: Remove the slug from the `featured` array
-- **Control order**: Reorder slugs in the arrays to change display order
-
-## Frontmatter Reference
-
-### Required Fields
-- `slug`: Unique identifier (used in URLs)
-- `title`: Project title
-- `subtitle`: Short description
-- `category`: Project category
-- `description`: Brief project summary
-- `year`: Project year
-- `duration`: How long the project took
-- `team`: Team size
-- `role`: Your role on the project
-- `heroImage`: Large image for case study header
-- `thumbnailImage`: Small image for project cards
-- `featured`: Whether to show in featured section (true/false)
-- `published`: Whether the case study is live (true/false)
-
-### Optional Fields
-- `client`: Client name
-- `overview`: Project overview text
-- `problem`: Problem statement
-- `solution`: Solution description
-- `tools`: Array of tools used
-- `technologies`: Array of technologies used
-- `liveUrl`: Link to live project
-- `prototypeUrl`: Link to prototype
-- `gallery`: Array of additional image URLs
-- `results`: Array of metric objects with `metric`, `value`, and `description`
-- `process`: Array of process steps
-
-## Best Practices
-
-### Images
-- Use high-quality images (at least 1080px wide)
-- Consider using a consistent aspect ratio
-- Use Unsplash or similar for placeholder images
-- Store your own images in a CDN or image hosting service
-
-### Content
-- Keep descriptions under 200 characters for better display
-- Use action-oriented language for metrics ("increase", "improvement", etc.)
-- Include specific, quantifiable results when possible
-- Write in active voice and focus on your contributions
-
-### Organization
-- Use descriptive, URL-friendly slugs (`mobile-banking-app` not `project-1`)
-- Organize by recency (most recent projects first in featured array)
-- Group similar project types with consistent categories
+Use the Unsplash tool for images or provide URLs to your own hosted images.
 
 ## Content Guidelines
 
-### Writing Style
-- **Be specific**: Instead of "improved user experience", say "reduced task completion time by 35%"
-- **Show impact**: Always include measurable results when possible
-- **Tell a story**: Structure as Problem → Solution → Results
-- **Use active voice**: "I designed" not "was designed"
-
 ### Project Categories
-Consistent categories help with filtering and organization:
-- UX Strategy & Design
-- Product Design
-- Mobile Design
-- Brand Strategy
-- Web Development
-- User Research
+
+Use these standardized categories:
+- **UX Strategy & Design**: Strategic UX work, research-heavy projects
+- **Product Design**: Digital product design (web/mobile apps)
+- **Brand Strategy**: Brand identity, visual design systems
+- **Mobile Design**: Mobile-specific projects
+- **Web Development**: Development-focused projects
+
+### Writing Style
+
+- **Clear and Concise**: Use straightforward language that explains complex design decisions
+- **Results-Focused**: Include specific metrics and business outcomes when possible
+- **Visual Storytelling**: Describe what users see and experience
+- **Professional Tone**: Confident but not boastful
+
+### Required Content Sections
+
+Every case study should include:
+1. **Overview**: Context and project goals
+2. **The Challenge**: Problems that needed solving
+3. **The Solution**: Your design approach
+4. **Design Process**: Step-by-step methodology
+5. **Results & Impact**: Outcomes and metrics
+
+### Image Best Practices
+
+- Use high-quality images (minimum 1200px wide for heroes)
+- Ensure images are relevant to the project
+- Include alt text considerations in your descriptions
+- Use consistent aspect ratios when possible
+
+## Technical Implementation
+
+The content loading system simulates a real markdown-based CMS:
+
+### Content Loader (`/utils/contentLoader.ts`)
+
+Handles:
+- Loading and parsing frontmatter metadata
+- Converting markdown to Project objects
+- Filtering featured vs. published projects
+- Error handling for missing content
+
+### Project Interface (`/data/projects.ts`)
+
+Defines the TypeScript interface for project data and provides helper functions for loading content.
+
+### Component Integration
+
+Components that use this system:
+- **WorkSection**: Loads featured projects for homepage
+- **ProjectsPage**: Loads all published projects for gallery
+- **CaseStudyPage**: Loads individual project details
+- **ProjectCard**: Displays project metadata
+
+## Future Enhancements
+
+To implement a real CMS, you would:
+
+1. **Add Markdown Parsing**: Use libraries like `gray-matter` and `marked`
+2. **File System Integration**: Read actual files from the content directory
+3. **Image Processing**: Optimize and resize images automatically
+4. **Content Validation**: Validate frontmatter structure and required fields
+5. **Search and Filtering**: Add search functionality and category filters
+6. **Content Preview**: Add preview mode for draft content
 
 ## Troubleshooting
 
-### Case Study Not Appearing
-1. Check that `published: true` in frontmatter
-2. Verify the slug is included in `/content/case-studies.json`
-3. Ensure markdown file is in `/content/case-studies/` directory
-4. Clear browser cache and refresh
+### Project Not Appearing
 
-### Formatting Issues
-1. Verify frontmatter is properly formatted YAML
-2. Check that frontmatter is enclosed in `---` lines
-3. Ensure arrays use proper YAML syntax with hyphens
-4. Validate JSON syntax in `case-studies.json`
+1. Check that the slug is added to `published` array in `index.json`
+2. Verify the markdown file exists in `/content/case-studies/`
+3. Ensure frontmatter is valid YAML
+4. Check browser console for loading errors
 
 ### Images Not Loading
-1. Verify image URLs are publicly accessible
-2. Check that URLs use HTTPS
-3. Test image URLs in a browser
-4. Consider using a CDN for better performance
 
----
+1. Verify image URLs are accessible
+2. Check for HTTPS vs HTTP issues
+3. Ensure images are publicly accessible
+4. Use the Unsplash tool for reliable stock images
 
-This content management system allows you to maintain your portfolio easily while keeping code and content separate. Simply edit markdown files to update your case studies!
-</parameter>
+### Deployment Issues
 
-<figma type="work">
-Now I need to update the components that use the project data to work with the new async loading system.
+1. Ensure all content files are committed to git
+2. Check that build process includes content directory
+3. Verify content loader handles missing files gracefully
+
+## Content Backup
+
+To backup content:
+1. The entire `/content/` directory contains all portfolio content
+2. `index.json` contains the project configuration
+3. Individual markdown files are self-contained with all metadata
+
+This system provides a robust foundation for content management while remaining simple to use and maintain.
