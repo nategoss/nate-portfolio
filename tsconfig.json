@@ -25,11 +25,17 @@
   },
   "include": [
     "src/**/*",
-    "components/**/*",
+    "components/**/*", 
     "styles/**/*",
-    "*.ts",
-    "*.tsx",
+    "utils/**/*",
+    "data/**/*",
     "vite.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "*.d.ts",
+    "App.tsx"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
