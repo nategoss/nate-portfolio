@@ -24,11 +24,9 @@
     "types": ["vite/client"]
   },
   "include": [
-    "src/**/*",
-    "components/**/*",
-    "styles/**/*",
-    "*.ts",
-    "*.tsx",
+    "src"
+  ],
+  "exclude": [
     "vite.config.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
