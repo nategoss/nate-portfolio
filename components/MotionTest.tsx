@@ -1,0 +1,1 @@
+// This test component has been removed - Motion is working correctly!
