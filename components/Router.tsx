@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, useParams, Link } from 'react-router-dom'
+import { Routes, Route, useLocation, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Navigation } from './Navigation'
 import { HeroSection } from './HeroSection'
@@ -99,12 +99,12 @@ function CaseStudyWrapper() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-content-primary mb-4 theme-transition">Project Not Found</h1>
           <p className="text-content-secondary mb-8 theme-transition">The project you're looking for doesn't exist.</p>
-          <Link 
-            to="/" 
+          <a 
+            href="/" 
             className="atomic-gradient-1 text-white px-6 py-3 rounded-full font-semibold atomic-shadow hover:atomic-shadow-lg transition-all duration-300 inline-block"
           >
             Return Home
-          </Link>
+          </a>
         </div>
       </div>
     )
