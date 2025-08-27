@@ -24,8 +24,12 @@
     "types": ["vite/client"]
   },
   "include": [
-    "src"
-  ],
+    "src/**/*",
+    "components/**/*",
+    "styles/**/*",
+    "*.ts",
+    "*.tsx"
+      ],
   "exclude": [
     "vite.config.ts"
   ],
